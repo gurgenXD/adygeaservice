@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main role="main">
+    <div class="container py-4 py-md-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+            <li class="breadcrumb-item active">Работы студентов</li>
+        </ol>
+        <h1 class="mb-4 mb-lg-5">Работы студентов</h1>
+        <div class="row mx-n4">
+            {% for item in works %}
+            <div class="col-lg-6">
+                <div class="gallery-item mb-5 px-2 mx-1">
+                    <img src="{{ item.image_small.url }}" alt="..." class="w-100 mb-2">
+                    <a href="{{ item.get_absolute_url }}" title="" class="stretched-link font-weight-bold text-dark text-decoration-none">{{ item.title }}<span class="text-muted font-weight-normal ml-2">/ {{ item.created_date|date:"F Y"|lower }}</span></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}

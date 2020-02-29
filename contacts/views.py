@@ -9,6 +9,8 @@ class ContactsView(View):
         addresses = Address.objects.all()
         phones = Phone.objects.all()
         emails = Email.objects.all()
+        socials = Social.objects.all()
+        schedule = Schedule.objects.all()
         map_code = MapCode.objects.first()
 
         feedback_form = FeedBackForm()
@@ -17,6 +19,8 @@ class ContactsView(View):
             'addresses': addresses,
             'phones': phones,
             'emails': emails,
+            'socials': socials,
+            'schedule': schedule,
             'map_code': map_code,
             'feedback_form': feedback_form,
         }

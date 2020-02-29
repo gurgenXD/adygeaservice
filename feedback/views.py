@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views import View
 from django.http import JsonResponse
 from django.contrib.sites.shortcuts import get_current_site
@@ -31,30 +30,4 @@ class FeedBackView(View):
         context = {
             'status': status,
         }
-
-        return JsonResponse(context)
-
-
-class CallBackView(View):
-    def post(self, request):
-        callback_form = CallBackForm(request.POST)
-        status = 0
-
-        if callback_form.is_valid():
-            current_site = get_current_site(request)
-            mail_subject = 'Новый звонок на сайте: ' + current_site.domain
-            message = render_to_string('feedback/callback_message.html', {
-                'domain': current_site.domain,
-                'phone': request.POST.get('phone'),
-            })
-            to_email = MailToString.objects.first().email
-            email = EmailMessage(mail_subject, message, to=[to_email])
-            email.send()
-            callback_form.save()
-            status = 1
-            
-        context = {
-            'status': status,
-        }
-
         return JsonResponse(context)

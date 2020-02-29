@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main role="main">
+    <div class="container py-4 py-md-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+            <li class="breadcrumb-item active">Направления</li>
+        </ol>
+        <h1 class="mb-4 mb-lg-5">Направления</h1>
+        <div class="row subjects-row">
+            {% for item in directions %}
+            <div class="col-md-6">
+                <div class="subject-card p-4 mb-4 border">
+                    <div class="subject-card-caption pb-3">
+                        <a href="{{ item.get_absolute_url }}" title="" class="h4 text-dark text-decoration-none stretched-link d-block mb-2">{{ item.title }}</a>
+                        <p class="small text-muted m-0">{{ item.desc|striptags }}</p>
+                    </div>
+                    <div class="subject-card-image" style="background-image: url({{ item.image_small.url }})"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}

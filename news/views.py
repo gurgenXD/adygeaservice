@@ -11,7 +11,7 @@ class NewsView(View):
             'news': news,
         }
         template = 'lo/{0}' if request.session.get('is_lo') else '{0}'
-        return render(request, template.format('news/news_detail.html'), context)
+        return render(request, template.format('news/news.html'), context)
 
 
 class NewsDetailView(View):

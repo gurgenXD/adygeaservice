@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main role="main">
+    <div class="container py-4 py-md-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+            <li class="breadcrumb-item"><a href="dropdown-content.html">О нас</a></li>
+            <li class="breadcrumb-item active">Новости</li>
+        </ol>
+        <h1 class="mb-4 mb-lg-5">Новости</h1>
+        <div class="row">
+            {% for item in news %}
+            <div class="col-lg-3 col-md-6">
+                <div class="news-item border rounded p-4 mb-4">
+                    <a href="{{ item.get_absolute_url }}" title="" class="d-block stretched-link text-dark text-decoration-none mb-5">{{ item.title }}</a>
+                    <span class="d-block text-uppercase small text-muted">{{ item.created|date:"d E" }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}

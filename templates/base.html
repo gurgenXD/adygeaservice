@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        {% include '__head.html' %}
+
+        <title>index</title>
+    </head>
+    <body>
+        {% include '__header.html' %}
+
+        {% block content %}
+        {% endblock %}
+
+        <div class="text-center position-fixed scroll-to-top">
+            <i class="fas fa-angle-up fa-2x"></i>
+        </div>
+
+        {% include '__footer.html' %}
+
+        {% include '__scripts.html' %}
+    </body>
+</html>

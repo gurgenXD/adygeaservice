@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main role="main">
+    <div class="container py-4 py-md-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+            <li class="breadcrumb-item"><a href="dropdown-content.html">О нас</a></li>
+            <li class="breadcrumb-item active">Преподаватели</li>
+        </ol>
+
+        <h1 class="mb-4 mb-lg-4">Преподаватели</h1>
+
+        {% for teacher in teachers %}
+        <div class="teacher-item mb-5 pb-3">
+            <div class="row">
+                <div class="col-lg-3 col-sm-4">
+                    <img src="https://source.unsplash.com/I3MF44-GrKs/290x435" alt="..." class="rounded w-100 mb-4 mb-md-0">
+                </div>
+                <div class="col-lg-6 col-sm-8">
+                    <div class="teacher-item-caption">
+                        <h2 class="h4">{{ teacher.name }}</h2>
+                        <span class="d-block smaller mb-1">Стаж работы:<span class="ml-2 font-weight-bold">{{ teacher.work_exp }}</span></span>
+                        <span class="d-block smaller mb-1">Педагогический стаж:<span class="ml-2 font-weight-bold">{{ teacher.teach_exp }}</span></span>
+                        <div class="teacher-item-tags pt-3 pb-4">
+                            {% for item in teacher.courses.all %}
+                            <span class="badge badge-dark font-weight-normal mr-2 px-2 py-1">{{ item.title|lower }}</span>
+                            {% endfor %}
+                        </div>
+                        <p>{{ teacher.text }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+     </div>
+</main>
+{% endblock %}

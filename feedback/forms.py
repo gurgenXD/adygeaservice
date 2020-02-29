@@ -2,18 +2,6 @@ from django import forms
 from feedback.models import *
 
 
-class CallBackForm(forms.ModelForm):
-    class Meta:
-        model = CallBack
-        fields = ('phone',)
-        widgets = {
-            'phone': forms.TextInput(attrs={'class': 'form-control',
-                                            'placeholder': '+7 (___) ___-__-__',
-                                            'id': 'CallBackModalPhone',
-                                            'autofocus': 'autofocus'}),
-        }
-
-
 class FeedBackForm(forms.ModelForm):
     class Meta:
         model = FeedBack
@@ -27,6 +15,6 @@ class FeedBackForm(forms.ModelForm):
                                                      'autofocus': 'autofocus'}),
             'text': forms.Textarea(attrs={'class': 'form-control',
                                           'placeholder': 'Ваше сообщение',
-                                          'rows': 5,
+                                          'rows': 4,
                                           'autofocus': 'autofocus'}),
         }

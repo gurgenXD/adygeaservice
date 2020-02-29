@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main role="main">
+    <div class="product-header bg-secondary py-4 py-lg-5">
+        <div class="container py-5">
+            <span class="d-block text-center">курс</span>
+            <h1 class="mb-4 mb-lg-5 text-center">{{ course.title }}</h1>
+            <div class="product-options d-flex flex-column flex-lg-row justify-content-center align-items-start mb-4 mb-lg-5">
+                <div class="product-subtitle px-5 pt-3 pb-2 pt-lg-0 pb-lg-0">
+                    <span class="d-block mb-1">Длительность</span>
+                    <span class="d-block h5 text-lowercase">{{ course.duration }}</span>
+                </div>
+
+                <div class="product-subtitle px-5 pt-3 pb-2 pt-lg-0 pb-lg-0">
+                    <span class="d-block mb-1">Запись на курс</span>
+                    <span class="d-block h5 text-lowercase">{{ course.course_reg }}</span>
+                </div>
+
+                <div class="product-subtitle px-5 pt-3 pb-2 pt-lg-0 pb-lg-0">
+                    <span class="d-block mb-1">Цена</span>
+                    <span class="d-block h5 text-lowercase number">{{ course.price }} ₽</span>
+                </div>
+            </div>
+
+            {% for item in course.teachers.all %}
+            <div class="teacher-sm d-flex justify-content-center align-items-center pt-3 mb-5">
+                <img src="{{ item.image_small.url }}" alt="" class="rounded-circle mr-3">
+                <div>
+                    <span class="d-block small font-weight-bold">Курс ведёт</span>
+                    <span class="d-block">{{ item.name }}</span>
+                    <span class="d-block small text-nowrap">Стаж работы: {{ item.work_exp }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container bg-white py-5 px-5 mt-n5">
+        <div class="row">
+            <div class="col-lg-7">
+                {{ course.desc|safe }}
+            </div>
+
+            <div class="col-lg-5">
+                <div class="text-center">
+                    <a href="#" data-toggle="modal" data-target="#FeedbackModal" title="" class="btn btn-primary btn-lg mb-3">Записаться на курс</a>
+                    <p class="small mb-5">или запишитесь по телефону <a href="tel:+78772523162" title="" class="d-block text-primary text-decoration-none">+7 (8772) 52-31-62</a></p>
+
+                    <div class="d-inline-block text-left">
+                        <span class="d-block small text-center mb-2">Поделиться</span>
+                        <div class="ya-share2" data-services="vkontakte,odnoklassniki,whatsapp,telegram,viber,facebook,twitter" data-limit="4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="modal fade" id="FeedbackModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content overflow-hidden shadow" id="OrderBlock">
+            <div class="modal-header px-4">
+                <h5 class="modal-title">Записаться на курс</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть окно">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-4 pb-4">
+                <p class="mb-4">Укажите контактные данные и мы с вами свяжемся</p>
+                <form class="needs-validation" novalidate action="{% url 'order' %}" method="post" id="OrderForm">
+                    {% csrf_token %}
+                    <div class="form-label-group smaller mb-4">
+                        {{ order_form.name }}
+                        <label>Ваше имя</label>
+
+                        <div class="invalid-feedback">
+                            Это поле должно быть заполнено
+                        </div>
+                    </div>
+
+                    <div class="form-label-group smaller mb-4">
+                        {{ order_form.email_or_phone }}
+                        <label>E-mail или телефон</label>
+
+                        <div class="invalid-feedback">
+                            Это поле должно быть заполнено
+                        </div>
+                    </div>
+
+                    <div class="py-2">
+                        {% include '__recaptcha.html' %}
+                    </div>
+
+                    <button data-course-id="{{ course.id }}" class="btn btn-primary" type="submit"><i class="fas fa-paper-plane mr-3"></i>Отправить</button>
+                </form>
+
+                <div class="alert d-none alert-danger alert-dismissible fade small show" role="alert">
+                    <strong>Произошла ошибка! </strong>Обновите страницу и попробуйте ещё раз.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="modal-footer px-4 pb-4">
+                <p class="text-muted small m-0">Нажимая кнопку "<i class="fas fa-paper-plane fa-xs mr-1"></i>отправить", вы даёте согласие на <a href="content.html" target="_blank">обработку персональных данных</a></p>
+            </div>
+
+            <div class="form-success d-none justify-content-center align-items-center">
+                <div class="text-center">
+                    <i class="far fa-check-circle fa-5x text-secondary mb-4"></i>
+                    <h3 class="h5 mb-1 mt-0">Спасибо за ваше сообщение!</h3>
+                    <p class="text-muted small mb-2">Мы получили его, и скоро с вами свяжемся.</p>
+                    <button type="button" class="btn text-muted" data-dismiss="modal" aria-label="Закрыть окно"><i class="fas fa-times fa-xs mr-2"></i>закрыть окно</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
+<script src="https://yastatic.net/share2/share.js"></script>
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load phone %}
+
+{% block content %}
+<main role="main">
+    <div class="container py-4 py-md-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+            <li class="breadcrumb-item active">Контакты</li>
+        </ol>
+
+        <h1 class="mb-4 mb-lg-5">Контакты</h1>
+        <address>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="mb-5">
+                        <span class="d-block mb-2">Адрес</span>
+                        {% for item in addresses %}
+                        <span class="d-block h5 mb-2">{{ item.value }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-5">
+                        <span class="d-block mb-2">Телефон</span>
+                        {% for item in phones %}
+                        <a href="tel:+{{ item.value|only_digits }}" title="" class="d-block text-dark text-decoration-none h5 mb-2">{{ item.value }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="mb-5">
+                        <span class="d-block mb-2">Электронная почта</span>
+                        {% for item in emails %}
+                        <a href="mailto:{{ item.value }}" title="" class="d-block text-dark text-decoration-none h5 mb-2">{{ item.value }}</a>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-5">
+                        <span class="d-block mb-2">Режим работы</span>
+                        {% for item in schedule %}
+                        <span class="d-block h5 mb-2">{{ item.days }}: {{ item.time }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="mb-5">
+                        <span class="d-block mb-2">Мы в соцсетях</span>
+                        <div class="socials">
+                            {% for item in socials %}
+                            <a href="{{ item.link }}" title="{{ item.name }}" target="_blank" class="mr-3"><i class="fab fa-{{ item.short_name }} fa-lg"></i></a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <a href="#" data-toggle="modal" data-target="#FeedbackModal" title="" class="btn btn-primary mb-3">Обратная связь</a>
+                    </div>
+                </div>
+            </div>
+        </address>
+
+        {{ map_code.value|safe }}
+    </div>
+</main>
+
+<div class="modal fade" id="FeedbackModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content overflow-hidden shadow" id="FeedBackBlock">
+            <div class="modal-header px-4">
+                <h5 class="modal-title">Обратная связь</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть окно">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-4 pb-4">
+                <form class="needs-validation" novalidate method="post" action="{% url 'feedback' %}" id="FeedBackForm">
+                    {% csrf_token %}
+                    <div class="form-label-group smaller mb-4">
+                        {{ feedback_form.name }}
+                        <label>Ваше имя</label>
+
+                        <div class="invalid-feedback">
+                            Это поле должно быть заполнено
+                        </div>
+                    </div>
+
+                    <div class="form-label-group smaller mb-4">
+                        {{ feedback_form.email_or_phone }}
+                        <label>E-mail или телефон</label>
+
+                        <div class="invalid-feedback">
+                            Это поле должно быть заполнено
+                        </div>
+                    </div>
+
+                    <div class="form-label-group textarea smaller mb-4">
+                        {{ feedback_form.text }}
+                        <label>Ваше сообщение</label>
+
+                        <div class="invalid-feedback">
+                            Это обязательное поле
+                        </div>
+                    </div>
+
+                    <div class="py-2">
+                        {% include '__recaptcha.html' %}
+                    </div>
+
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-paper-plane mr-3"></i>Отправить</button>
+                </form>
+
+                <div class="alert alert-danger d-none alert-dismissible fade small show" role="alert">
+                    <strong>Произошла ошибка! </strong>Обновите страницу и попробуйте ещё раз.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="modal-footer px-4 pb-4">
+                <p class="text-muted small m-0">Нажимая кнопку "<i class="fas fa-paper-plane fa-xs mr-1"></i>отправить", вы даёте согласие на <a href="/personal-data/" target="_blank">обработку персональных данных</a></p>
+            </div>
+
+            <div class="form-success d-none justify-content-center align-items-center">
+                <div class="text-center">
+                    <i class="far fa-check-circle fa-5x text-secondary mb-4"></i>
+                    <h3 class="h5 mb-1 mt-0">Спасибо за ваше сообщение!</h3>
+                    <p class="text-muted small mb-2">Мы получили его, и скоро с вами свяжемся.</p>
+                    <button type="button" class="btn text-muted" data-dismiss="modal" aria-label="Закрыть окно"><i class="fas fa-times fa-xs mr-2"></i>закрыть окно</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

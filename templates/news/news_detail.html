@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main role="main">
+    <div class="container py-4 py-md-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+            <li class="breadcrumb-item"><a href="dropdown-content.html">О нас</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Новости</a></li>
+            <li class="breadcrumb-item active">{{ news_item.title }}</li>
+        </ol>
+
+        <article>
+            <span class="d-block text-muted smaller font-weight-bold mb-2">{{ item.created|date:"d E" }}</span>
+            <h1 class="mt-0 mb-2">{{ news_item.title }}</h1>
+
+            <div class="d-flex justify-content-between narrow pb-4 pt-3">
+
+                <div class="d-flex">
+                    <div class="ya-share2" data-services="vkontakte,odnoklassniki,whatsapp,telegram,viber,facebook,twitter" data-limit="4"></div>
+                </div>
+            </div>
+
+            {{ news_item.text|safe }}
+</main>
+
+<script src="https://yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
+<script src="https://yastatic.net/share2/share.js"></script>
+{% endblock %}

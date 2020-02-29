@@ -34,16 +34,24 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
+    'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
 
     'core',
     'news',
     'contacts',
+    'feedback',
+    'works',
+    'directions',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'src.urls'
@@ -141,3 +150,5 @@ FILEBROWSER_DIRECTORY = 'upload/'
 DIRECTORY = ''
 
 EMAIL_BACKEND = 'core.email_backend.EmailBackend'
+
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LcNnpAUAAAAAP8zDEOl2Erhj2F9bMPOjQza78Hb'
