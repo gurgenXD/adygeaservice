@@ -5,6 +5,9 @@ django-appconf==1.0.3
 django-filebrowser==3.12.1
 django-grappelli==2.13.3
 django-imagekit==4.0.2
+django-js-asset==1.2.2
+django-mptt==0.11.0
+django-mptt-admin==1.0.1
 idna==2.8
 pilkit==2.0
 Pillow==7.0.0
