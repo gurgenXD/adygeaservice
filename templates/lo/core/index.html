@@ -1,0 +1,75 @@
+{% extends 'lo/base.html' %}
+
+{% block content %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<div class="page">
+    <h1>Обучаем востребованным профессиям</h1><br>
+
+    <h2>Направления</h2><br>
+    <p>{{ index.dir_text }}</p>
+    <div class="hentry">
+        {% for item in directions %}
+            <br>
+            <h3><a href="{{ item.get_absolute_url }}" title="">{{ item.title }}</a></h3>
+            <p>{{ item.desc|striptags }}</p>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'directions' %}">Подробнее</a>
+
+    <br><br><br>
+    <h2>Процесс обучения</h2><br>
+    <p>{{ index.process_text }}</p>
+    <div class="hentry">
+        {% for item in index.processes.all %}
+            <br>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.text }}</p>
+        {% endfor %}
+    </div>
+
+
+    <br><br><br>
+    <h2>Некоторые работы наших студентов</h2><br>
+    <div class="hentry" style="display: flex;
+                               flex-wrap: wrap;
+                               justify-content: space-between;
+                               align-items: flex-start">
+        {% for item in index.index_works.all %}
+            <img src="{{ item.image_small.url }}" style="float:left" alt="">
+        {% endfor %}
+    </div>
+    <div style="clear: both"></div>
+
+    <br><br><br>
+    <h2>Остались вопросы?</h2><br>
+    <p>{{ index.contact_text }}</p>
+    <div class="hentry" id="FeedBackBlock">
+        <br>
+        <form class="needs-validation" novalidate method="post" action="{% url 'feedback' %}" id="FeedBackForm">
+            {% csrf_token %}
+            {{ feedback_form.name }}<br><br>
+            {{ feedback_form.email_or_phone }}<br><br>
+            {{ feedback_form.text }}<br><br>
+            {% include '__recaptcha.html' %}
+            <br>
+            <p>Нажимая кнопку "отправить", вы даёте согласие на <a href="/personal-data/" target="_blank">обработку персональных данных</a></p>
+            <br>
+            <button class="btn" type="submit">Отправить</button>
+        </form>
+        <br>
+
+        <div class="alert alert-danger d-none alert-dismissible fade small show" role="alert">
+            <strong>Произошла ошибка! </strong>Обновите страницу и попробуйте ещё раз.
+        </div>
+
+        <div class="form-success d-none justify-content-center align-items-center">
+            <div class="text-center">
+                <h3 class="h5 mb-1 mt-0">Спасибо за ваше сообщение!</h3>
+                <p class="small">Мы получили его, и скоро с вами свяжемся.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -106,11 +106,15 @@ $(document).ready(function(){
     var products = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.whitespace,
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        prefetch: '../search-data.json'
+        prefetch: '/directions/courses.json/?query=%QUERY',
+        remote: {
+            url: '/directions/courses.json/?query=%QUERY',
+            wildcard: '%QUERY'
+        }
     });
 
     $('.typeahead').typeahead(null, {
-        name: 'search-data',
+        name: 'products',
         source: products
     });
 });

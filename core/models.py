@@ -1,5 +1,6 @@
 from django.db import models
-# from contacts.models import Phone, Address
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFit
 
 
 class SEO(models.Model):
@@ -68,72 +69,48 @@ class TitleTag(models.Model):
 
     def __str__(self):
         return self.seo_title
-#
-#
-# class Index(models.Model):
-#     phone = models.ForeignKey(Phone, on_delete=models.SET_NULL, verbose_name='Телефон', null=True)
-#     address = models.ForeignKey(Address, on_delete=models.SET_NULL, verbose_name='Адрес', null=True)
-#     service = models.ForeignKey(Service, on_delete=models.SET_NULL, verbose_name='Услуга', null=True)
-#     about = models.TextField(verbose_name='О нас')
-#
-#     class Meta:
-#         verbose_name = 'Главная страница'
-#         verbose_name_plural = 'Главная страница'
-#
-#     def __str__(self):
-#         return 'Главная страница #{0}'.format(self.id)
-#
-#
-# class Slide(models.Model):
-#     index = models.ForeignKey(Index, on_delete=models.CASCADE, verbose_name='Главная', related_name='slides')
-#     title = models.CharField(max_length=250, verbose_name='Заголовок')
-#     desc = models.CharField(max_length=250, verbose_name='Описание')
-#     image = models.ImageField(upload_to='index/slides/', verbose_name='Фото')
-#
-#     class Meta:
-#         verbose_name = 'Слайд'
-#         verbose_name_plural = 'Слайды'
-#
-#     def __str__(self):
-#         return self.title
-#
-#
-# class Fact(models.Model):
-#     index = models.ForeignKey(Index, on_delete=models.CASCADE, verbose_name='Главная', related_name='facts')
-#     top = models.CharField(max_length=10, verbose_name='Вверх')
-#     center = models.CharField(max_length=250, verbose_name='Центр')
-#     bottom = models.CharField(max_length=250, verbose_name='Низ')
-#
-#     class Meta:
-#         verbose_name = 'Факт'
-#         verbose_name_plural = 'Факты'
-#
-#     def __str__(self):
-#         return self.center
-#
-#
-# class Partner(models.Model):
-#     index = models.ForeignKey(Index, on_delete=models.CASCADE, verbose_name='Главная', related_name='partners')
-#     url = models.URLField(max_length=250, verbose_name='URL')
-#     image = models.ImageField(upload_to='index/partners/', verbose_name='Фото')
-#
-#     class Meta:
-#         verbose_name = 'Партнёр'
-#         verbose_name_plural = 'Партнёры'
-#
-#     def __str__(self):
-#         return self.url
-#
-#
-# class Goal(models.Model):
-#     index = models.ForeignKey(Index, on_delete=models.CASCADE, verbose_name='Главная', related_name='goals')
-#     title = models.CharField(max_length=250, verbose_name='Заголовок')
-#     text = models.CharField(max_length=250, verbose_name='Текст')
-#     image = models.ImageField(upload_to='index/goals/', verbose_name='Фото')
-#
-#     class Meta:
-#         verbose_name = 'Преимущество'
-#         verbose_name_plural = 'Преимущества'
-#
-#     def __str__(self):
-#         return self.title
+
+
+class Index(models.Model):
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    dir_text = models.TextField(verbose_name='Текст направления')
+    process_text = models.TextField(verbose_name='Текст процесса обучения')
+    contact_text = models.TextField(verbose_name='Текст контактов')
+
+    class Meta:
+        verbose_name = 'Главная страница'
+        verbose_name_plural = 'Главная страница'
+
+    def __str__(self):
+        return 'Главная страница #{0}'.format(self.id)
+
+
+class Process(models.Model):
+    index = models.ForeignKey(Index, on_delete=models.CASCADE, verbose_name='Главная', related_name='processes')
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    text = models.TextField(verbose_name='Описание')
+    image = models.FileField(upload_to='index/process/', max_length=254, verbose_name='Изображение')
+
+    class Meta:
+        verbose_name = 'Процесс обучения'
+        verbose_name_plural = 'Процессы обучения'
+
+    def __str__(self):
+        return self.title
+
+
+class IndexWork(models.Model):
+    index = models.ForeignKey(Index, on_delete=models.CASCADE, verbose_name='Главная', related_name='index_works')
+    image = models.ImageField(upload_to='index/partners/', verbose_name='Фото')
+
+    image_small = ImageSpecField(source='image',
+                                 processors=[ResizeToFit(290)],
+                                 format='JPEG',
+                                 options={'quality': 90})
+
+    class Meta:
+        verbose_name = 'Работа студентов'
+        verbose_name_plural = 'Работы студентов'
+
+    def __str__(self):
+        return str(self.id)

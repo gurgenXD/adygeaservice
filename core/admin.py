@@ -9,41 +9,23 @@ admin.site.register(MailToString)
 admin.site.register(TitleTag)
 
 
-# class SlideInline(admin.TabularInline):
-#     model = Slide
-#     extra = 0
-#     classes = ('grp-collapse grp-closed',)
-#
-#
-# class FactInline(admin.TabularInline):
-#     model = Fact
-#     extra = 0
-#     classes = ('grp-collapse grp-closed',)
-#
-#
-# class PartnerInline(admin.TabularInline):
-#     model = Partner
-#     extra = 0
-#     classes = ('grp-collapse grp-closed',)
-#
-#
-# class GoalInline(admin.TabularInline):
-#     model = Goal
-#     extra = 0
-#     classes = ('grp-collapse grp-closed',)
-#
-#
-# @admin.register(Index)
-# class IndexAdmin(admin.ModelAdmin):
-#     inlines = (SlideInline, FactInline, PartnerInline, GoalInline)
-#
-#     class Media:
-#         js = (
-#             '/static/grappelli/tinymce/jscripts/tiny_mce/tiny_mce.js',
-#             '/static/grappelli/tinymce_setup/tinymce_setup.js',
-#         )
-#
-#
+class ProcessInline(admin.TabularInline):
+    model = Process
+    extra = 0
+    classes = ('grp-collapse grp-closed',)
+
+
+class IndexWorkInline(admin.TabularInline):
+    model = IndexWork
+    extra = 0
+    classes = ('grp-collapse grp-closed',)
+
+
+@admin.register(Index)
+class IndexAdmin(admin.ModelAdmin):
+    inlines = (ProcessInline, IndexWorkInline)
+
+
 admin.site.unregister(FlatPage)
 
 @admin.register(FlatPage)

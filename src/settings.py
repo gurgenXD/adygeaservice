@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
 
+    'mptt',
+    'django_mptt_admin',
+
     'core',
     'news',
     'contacts',
@@ -52,6 +55,8 @@ INSTALLED_APPS = [
     'works',
     'directions',
     'orders',
+    'service_info',
+    'pages',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>{{ structure.seo_title }}</title>
+    <meta name="description" content="{{ structure.seo_desc }}">
+    <meta name="keywords" content="{{ structure.seo_kwrds }}">
+{% endblock title %}
+
+{% block content %}
+<main role="main">
+    <div class="container py-4 py-md-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+{#            <li class="breadcrumb-item"><a href="/about/">О нас</a></li>#}
+            <li class="breadcrumb-item"><a href="{% url 'service_info' %}">Сведения об образовательной организации</a></li>
+            <li class="breadcrumb-item active">Структура и органы управления образовательной организацией</li>
+        </ol>
+        <h1 class="mb-0">Структура и органы управления образовательной организацией</h1>
+    </div>
+
+    <div class="px-4 pb-5">
+        <div class="table-responsive">
+            {{ structure.table_info|safe }}
+        </div>
+    </div>
+</main>
+{% endblock %}

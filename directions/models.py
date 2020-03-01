@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.html import mark_safe
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
+from imagekit.processors import ResizeToFill, ResizeToFit
 from uuid import uuid1
 from core.models import SEO
 
@@ -29,6 +29,11 @@ class Teacher(models.Model):
 
     image_small = ImageSpecField(source='image',
                                  processors=[ResizeToFill(64, 64)],
+                                 format='JPEG',
+                                 options={'quality': 90})
+
+    image_big = ImageSpecField(source='image',
+                                 processors=[ResizeToFill(290, 435)],
                                  format='JPEG',
                                  options={'quality': 90})
 

@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
+from django.http import JsonResponse
 from directions.models import *
 from orders.forms import OrderForm
+from contacts.models import Phone
 
 
 class TeachersView(View):
@@ -11,7 +13,8 @@ class TeachersView(View):
         context = {
             'teachers': teachers,
         }
-        return render(request, 'directions/teachers.html', context)
+        template = 'lo/{0}' if request.session.get('is_lo') else '{0}'
+        return render(request, template.format('directions/teachers.html'), context)
 
 
 class DirectionsView(View):
@@ -21,7 +24,8 @@ class DirectionsView(View):
         context = {
             'directions': directions,
         }
-        return render(request, 'directions/directions.html', context)
+        template = 'lo/{0}' if request.session.get('is_lo') else '{0}'
+        return render(request, template.format('directions/directions.html'), context)
 
 
 class DirectionView(View):
@@ -31,16 +35,41 @@ class DirectionView(View):
         context = {
             'direction': direction,
         }
-        return render(request, 'directions/direction.html', context)
+        template = 'lo/{0}' if request.session.get('is_lo') else '{0}'
+        return render(request, template.format('directions/direction.html'), context)
 
 
 class CourseView(View):
     def get(self, request, course_slug):
         course = get_object_or_404(Course, slug=course_slug)
         order_form = OrderForm()
+        call_phone = Phone.objects.first()
 
         context = {
             'course': course,
             'order_form': order_form,
+            'call_phone': call_phone,
         }
-        return render(request, 'directions/course.html', context)
+        template = 'lo/{0}' if request.session.get('is_lo') else '{0}'
+        return render(request, template.format('directions/course.html'), context)
+
+
+class SearchResultView(View):
+    def get(self, request):
+        query = request.GET.get('query', '')
+        courses = Course.objects.filter(title__icontains=query)
+
+        context = {
+            'courses': courses,
+        }
+        template = 'lo/{0}' if request.session.get('is_lo') else '{0}'
+        return render(request, template.format('directions/search-result.html'), context)
+
+
+class CoursesJsonView(View):
+    def get(self, request):
+        query = request.GET.get('query', '')
+        products = Course.objects.filter(title__icontains=query)
+        search_list = [item.title for item in products]
+
+        return JsonResponse(search_list, safe=False)

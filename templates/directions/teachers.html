@@ -5,7 +5,7 @@
     <div class="container py-4 py-md-5">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
-            <li class="breadcrumb-item"><a href="dropdown-content.html">О нас</a></li>
+{#            <li class="breadcrumb-item"><a href="/about/">О нас</a></li>#}
             <li class="breadcrumb-item active">Преподаватели</li>
         </ol>
 
@@ -15,7 +15,7 @@
         <div class="teacher-item mb-5 pb-3">
             <div class="row">
                 <div class="col-lg-3 col-sm-4">
-                    <img src="https://source.unsplash.com/I3MF44-GrKs/290x435" alt="..." class="rounded w-100 mb-4 mb-md-0">
+                    <img src="{{ teacher.image_big.url }}" alt="..." class="rounded w-100 mb-4 mb-md-0">
                 </div>
                 <div class="col-lg-6 col-sm-8">
                     <div class="teacher-item-caption">

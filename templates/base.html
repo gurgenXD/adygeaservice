@@ -3,7 +3,16 @@
     <head>
         {% include '__head.html' %}
 
-        <title>index</title>
+        {% for item in seo_titles %}
+            {% if request.path == item.url  %}
+                <title>{{ item.seo_title }}</title>
+                <meta name="description" content="{{ item.seo_desc }}">
+                <meta name="keywords" content="{{ item.seo_kwrds }}">
+            {% endif %}
+        {% endfor %}
+
+        {% block title %}
+        {% endblock title %}
     </head>
     <body>
         {% include '__header.html' %}

@@ -1,0 +1,32 @@
+{% extends 'lo/base.html' %}
+
+{% block title %}
+    <title>{{ album.seo_title }}</title>
+    <meta name="description" content="{{ album.seo_desc }}">
+    <meta name="keywords" content="{{ album.seo_kwrds }}">
+{% endblock title %}
+
+{% block content %}
+ <div class="page">
+    <h1>{{ album.title }}</h1><br>
+
+    <div class="hentry">
+        <p class="text-muted mb-0">{{ album.desc }}</p><br>
+        <div class="col-lg-6 text-lg-right">
+            <div class="d-inline-block text-left">
+                <span class="d-block small mb-2">Поделиться</span>
+                <div class="ya-share2" data-services="vkontakte,odnoklassniki,whatsapp,telegram,viber,facebook,twitter" data-limit="4"></div>
+            </div>
+        </div>
+        <br>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between">
+            {% for item in album.images.all %}
+                <img style="padding-top: 10px" src="{{ item.image_small.url }}" alt="">
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script src="https://yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
+<script src="https://yastatic.net/share2/share.js"></script>
+{% endblock %}

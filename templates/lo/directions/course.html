@@ -1,0 +1,69 @@
+{% extends 'lo/base.html' %}
+{% load phone %}
+
+{% block title %}
+    <title>{{ course.seo_title }}</title>
+    <meta name="description" content="{{ course.seo_desc }}">
+    <meta name="keywords" content="{{ course.seo_kwrds }}">
+{% endblock title %}
+
+{% block content %}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+<div class="page">
+    <p>курс</p>
+    <h1>{{ course.title }}</h1><br>
+    <br>
+
+    <div class="hentry">
+        <h3>Длительность:</h3><span>{{ course.duration }}</span><br><br>
+        <h3>Запись на курс:</h3><span>{{ course.course_reg }}</span><br><br>
+        <h3>Цена</h3><span>{{ course.price }}</span><br><br>
+
+        {% for item in course.teachers.all %}
+            <div>
+                <img src="{{ item.image_small.url }}" alt="">
+                <span>Курс ведёт</span>
+                <span>{{ item.name }}</span>
+                <b>Стаж работы: {{ item.work_exp }}</b>
+            </div>
+        {% endfor %}
+        <br><br>
+        <p>{{ course.desc|safe }}</p>
+        <br><br>
+        <div class="d-inline-block text-left">
+            <span class="d-block small text-center mb-2">Поделиться</span>
+            <div class="ya-share2" data-services="vkontakte,odnoklassniki,whatsapp,telegram,viber,facebook,twitter" data-limit="4"></div>
+        </div>
+        <br><br>
+        <h3>Запишитесь по телефону <a href="tel:+{{ call_phone.value|only_digits }}" title="">{{ call_phone.value }}</a></h3>
+        <br><br>
+        <h3>Записаться на курс:</h3>
+
+        <div id="OrderBlock">
+            <p>Укажите контактные данные и мы с вами свяжемся</p><br>
+            <form novalidate action="{% url 'order' %}" method="post" id="OrderForm">
+                {% csrf_token %}
+                    {{ order_form.name }}<br><br>
+                    {{ order_form.email_or_phone }}<br><br>
+                    {% include '__recaptcha.html' %}<br><br>
+                    <button data-course-id="{{ course.id }}" class="btn" type="submit">Отправить</button>
+            </form>
+            <br><br>
+            <div class="alert d-none alert-danger alert-dismissible fade small show" role="alert">
+                <strong>Произошла ошибка! </strong>Обновите страницу и попробуйте ещё раз.
+            </div>
+            <div class="form-success d-none justify-content-center align-items-center">
+                <div class="text-center">
+                    <i class="far fa-check-circle fa-5x text-secondary mb-4"></i>
+                    <h3 class="h5 mb-1 mt-0">Спасибо за ваше сообщение!</h3>
+                    <p class="text-muted small mb-2">Мы получили его, и скоро с вами свяжемся.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
+<script src="https://yastatic.net/share2/share.js"></script>
+{% endblock %}

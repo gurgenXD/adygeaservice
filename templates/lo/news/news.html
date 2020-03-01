@@ -1,0 +1,16 @@
+{% extends 'lo/base.html' %}
+
+{% block content %}
+ <div class="page">
+    <h1>Новости</h1><br>
+
+    <div class="hentry">
+        {% for item in news %}
+            <div>
+                <h2><a href="{{ item.get_absolute_url }}" title="">{{ item.title }}</a></h2>
+                <p>{{ item.created|date:"d E" }}</p>
+            </div><br>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

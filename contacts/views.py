@@ -24,5 +24,5 @@ class ContactsView(View):
             'map_code': map_code,
             'feedback_form': feedback_form,
         }
-        
-        return render(request, 'contacts/contacts.html', context)
+        template = 'lo/{0}' if request.session.get('is_lo') else '{0}'
+        return render(request, template.format('contacts/contacts.html'), context)

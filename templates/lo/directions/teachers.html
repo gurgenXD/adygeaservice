@@ -1,0 +1,23 @@
+{% extends 'lo/base.html' %}
+
+{% block content %}
+ <div class="page">
+    <h1>Преподаватели</h1><br>
+
+    <div class="hentry">
+        {% for teacher in teachers %}
+        <br><br><br>
+        <h2>{{ teacher.name }}</h2>
+        <img src="{{ teacher.image_big.url }}" alt="">
+        <p><b>Стаж работы:</b> {{ teacher.work_exp }}</p>
+        <p><b>Педагогический стаж:</b> {{ teacher.teach_exp }}</p>
+        <div class="teacher-item-tags pt-3 pb-4">
+            {% for item in teacher.courses.all %}
+            <i style="padding-right: 10px">{{ item.title|lower }}</i>
+            {% endfor %}
+        </div><br>
+        <p>{{ teacher.text }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

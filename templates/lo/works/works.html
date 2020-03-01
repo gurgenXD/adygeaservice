@@ -1,0 +1,17 @@
+{% extends 'lo/base.html' %}
+
+{% block content %}
+ <div class="page">
+    <h1>Работы студентов</h1><br>
+
+    <div class="hentry">
+        {% for item in works %}
+            <div>
+                <img src="{{ item.image_small.url }}" alt="..." class="w-100 mb-2">
+                <h2><a href="{{ item.get_absolute_url }}" title="">{{ item.title }}</a></h2>
+                <p>{{ item.created_date|date:"F Y"|lower }}</p>
+            </div><br>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 
+{% block title %}
+    <title>{{ news_item.seo_title }}</title>
+    <meta name="description" content="{{ news_item.seo_desc }}">
+    <meta name="keywords" content="{{ news_item.seo_kwrds }}">
+{% endblock title %}
+
 {% block content %}
 <main role="main">
     <div class="container py-4 py-md-5">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
-            <li class="breadcrumb-item"><a href="dropdown-content.html">О нас</a></li>
+{#            <li class="breadcrumb-item"><a href="/about/">О нас</a></li>#}
             <li class="breadcrumb-item"><a href="{% url 'index' %}">Новости</a></li>
             <li class="breadcrumb-item active">{{ news_item.title }}</li>
         </ol>

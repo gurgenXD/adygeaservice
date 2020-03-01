@@ -1,0 +1,23 @@
+{% extends 'lo/base.html' %}
+
+{% block title %}
+    <title>{{ direction.seo_title }}</title>
+    <meta name="description" content="{{ direction.seo_desc }}">
+    <meta name="keywords" content="{{ direction.seo_kwrds }}">
+{% endblock title %}
+
+{% block content %}
+<div class="page">
+    <h1>{{ direction.title }}</h1><br>
+
+    <div class="hentry">
+        {% for item in direction.courses.all %}
+        <br>
+        <div>
+            <h3><a href="{{ item.get_absolute_url }}" title="" >{{ item.title }}</a></h3>
+            <p>{{ item.duration }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

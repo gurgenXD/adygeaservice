@@ -18,6 +18,7 @@ urlpatterns = [
     path('directions/', include('directions.urls')),
     path('orders/', include('orders.urls')),
     path('news/', include('news.urls')),
+    path('service-info/', include('service_info.urls')),
 ]
 
 if settings.DEBUG:

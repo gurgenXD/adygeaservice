@@ -25,6 +25,7 @@ $(document).ready(function(){
                 if (data.status) {
                     $('#FeedBackBlock .form-success').removeClass('d-none');
                     $('#FeedBackBlock .form-success').addClass('d-flex');
+                    $('#FeedBackForm label').addClass('d-none');
                 } else {
                     $('#FeedBackBlock .alert-danger').removeClass('d-none');
                 }
@@ -64,4 +65,10 @@ $(document).ready(function(){
             }
 		});
     });
+
+    $('.search-input').on('keypress',function(e){
+        if(e.which == 13) {
+            $(this).parent().parent('.search-box').submit();
+        }
+     });
 });

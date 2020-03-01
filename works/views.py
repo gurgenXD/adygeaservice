@@ -10,7 +10,8 @@ class WorksView(View):
         context = {
             'works': works,
         }
-        return render(request, 'works/works.html', context)
+        template = 'lo/{0}' if request.session.get('is_lo') else '{0}'
+        return render(request, template.format('works/works.html'), context)
 
 
 class AlbumView(View):
@@ -20,4 +21,5 @@ class AlbumView(View):
         context = {
             'album': album,
         }
-        return render(request, 'works/album.html', context)
+        template = 'lo/{0}' if request.session.get('is_lo') else '{0}'
+        return render(request, template.format('works/album.html'), context)

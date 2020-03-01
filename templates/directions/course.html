@@ -1,4 +1,11 @@
 {% extends 'base.html' %}
+{% load phone %}
+
+{% block title %}
+    <title>{{ course.seo_title }}</title>
+    <meta name="description" content="{{ course.seo_desc }}">
+    <meta name="keywords" content="{{ course.seo_kwrds }}">
+{% endblock title %}
 
 {% block content %}
 <main role="main">
@@ -45,7 +52,7 @@
             <div class="col-lg-5">
                 <div class="text-center">
                     <a href="#" data-toggle="modal" data-target="#FeedbackModal" title="" class="btn btn-primary btn-lg mb-3">Записаться на курс</a>
-                    <p class="small mb-5">или запишитесь по телефону <a href="tel:+78772523162" title="" class="d-block text-primary text-decoration-none">+7 (8772) 52-31-62</a></p>
+                    <p class="small mb-5">или запишитесь по телефону <a href="tel:+{{ call_phone.value|only_digits }}" title="" class="d-block text-primary text-decoration-none">{{ call_phone.value }}</a></p>
 
                     <div class="d-inline-block text-left">
                         <span class="d-block small text-center mb-2">Поделиться</span>

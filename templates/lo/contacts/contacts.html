@@ -1,0 +1,69 @@
+{% extends 'lo/base.html' %}
+{% load phone %}
+
+{% block content %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<div class="page">
+    <h1>Контакты</h1><br>
+
+    <div class="hentry">
+        <p><b>Телефон</b></p>
+        {% for item in phones %}
+            {{ item.value }} <br>
+        {% endfor %}
+        <br>
+
+        <p><b>Адрес</b></p>
+        {% for item in addresses %}
+            {{ item.value }} <br>
+        {% endfor %}
+        <br>
+
+        <p><b>Электронная почта</b></p>
+        {% for item in emails %}
+        <a href="mailto:{{ item.value }}">{{ item.value }}</a><br>
+        {% endfor %}
+        <br>
+
+        <p><b>Режим работы</b></p>
+        {% for item in shedule %}
+        {{ item.days }}: <b>{{ item.time }}</b><br>
+        {% endfor %}
+        <br>
+
+        <div>
+            {{ map_code|safe }}
+        </div>
+
+    </div>
+
+    <h2>Обратная связь</h2><br>
+    <div class="hentry" id="FeedBackBlock">
+        <br>
+        <form class="needs-validation" novalidate method="post" action="{% url 'feedback' %}" id="FeedBackForm">
+            {% csrf_token %}
+            {{ feedback_form.name }}<br><br>
+            {{ feedback_form.email_or_phone }}<br><br>
+            {{ feedback_form.text }}<br><br>
+            {% include '__recaptcha.html' %}
+            <br>
+            <p>Нажимая кнопку "отправить", вы даёте согласие на <a href="/personal-data/" target="_blank">обработку персональных данных</a></p>
+            <br>
+            <button class="btn" type="submit">Отправить</button>
+        </form>
+        <br>
+
+        <div class="alert alert-danger d-none alert-dismissible fade small show" role="alert">
+            <strong>Произошла ошибка! </strong>Обновите страницу и попробуйте ещё раз.
+        </div>
+
+        <div class="form-success d-none justify-content-center align-items-center">
+            <div class="text-center">
+                <h3 class="h5 mb-1 mt-0">Спасибо за ваше сообщение!</h3>
+                <p class="small">Мы получили его, и скоро с вами свяжемся.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

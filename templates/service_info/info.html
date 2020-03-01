@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main role="main">
+    <div class="container py-4 py-md-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+{#            <li class="breadcrumb-item"><a href="/about/">О нас</a></li>#}
+            <li class="breadcrumb-item active">Сведения об образовательной организации</li>
+        </ol>
+        <h1 class="mb-0">Сведения об образовательной организации</h1>
+
+        <h2 class="h3 mb-4 pt-5">Информация размещена во исполнение:</h2>
+        {% for item in executions %}
+        <a href="{{ item.document.url }}" target="_blank" class="d-block text-dark mb-4 smaller">{{ item.title }}</a>
+        {% endfor %}
+
+        <h2 class="h3 mb-4 pt-5">Основные сведения</h2>
+        {{ info.info|safe }}
+
+        <h2 class="h3 mb-4 pt-5">Структура и органы управления образовательной организацией</h2>
+        {% for item in structures %}
+        <a href="{{ item.get_absolute_url }}" class="d-block text-dark mb-4 smaller">{{ item.title|striptags }}</a>
+        {% endfor %}
+
+        <h2 class="h3 mb-4 pt-5">Документы</h2>
+        {% for item in documents %}
+        <a href="{{ item.document.url }}" target="_blank" class="d-block text-dark mb-4 smaller">{{ item.title }}</a>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}
