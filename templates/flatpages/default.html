@@ -1,21 +1,31 @@
-{% extends 'base.html' %}
+{% extends is_lo|yesno:"lo/base.html,base.html" %}
 
 {% block content %}
-<main role="main">
-    <div class="container py-4 py-md-5">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
-{#            <li class="breadcrumb-item"><a href="/students/">Аспирантам</a></li>#}
-            <li class="breadcrumb-item active">Процесс обучения</li>
-        </ol>
+    {% if is_lo %}
+         <div class="page">
+            <h1>{{ flatpage.title }}</h1><br>
 
-        <article>
-            <h1 class="mt-0">{{ flatpage.title }}</h1>
-            {{ flatpage.content|safe }}
-        </article>
-    </div>
-</main>
+            <div class="hentry">
+                {{ flatpage.content|safe }}
+            </div>
+        </div>
+    {% else %}
+        <main role="main">
+            <div class="container py-4 py-md-5">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+        {#            <li class="breadcrumb-item"><a href="/students/">Аспирантам</a></li>#}
+                    <li class="breadcrumb-item active">Процесс обучения</li>
+                </ol>
 
-{% include '__photoswipe.html' %}
+                <article>
+                    <h1 class="mt-0">{{ flatpage.title }}</h1>
+                    {{ flatpage.content|safe }}
+                </article>
+            </div>
+        </main>
 
+        {% include '__photoswipe.html' %}
+    {% endif %}
 {% endblock %}
+

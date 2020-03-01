@@ -16,6 +16,8 @@ def context_info(request):
     second_group = footer_pages[per_group:per_group*2]
     third_group = footer_pages[per_group*2:]
 
+    is_lo = request.session.get('is_lo')
+
     context = {
         'pages': pages,
         'first_group': first_group,
@@ -25,5 +27,6 @@ def context_info(request):
         'main_phones': main_phones,
         'address': address,
         'footer_pages': footer_pages,
+        'is_lo': is_lo,
     }
     return context
