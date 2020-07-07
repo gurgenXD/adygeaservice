@@ -76,6 +76,7 @@ class Index(models.Model):
     dir_text = models.TextField(verbose_name='Текст направления')
     process_text = models.TextField(verbose_name='Текст процесса обучения')
     contact_text = models.TextField(verbose_name='Текст контактов')
+    link = models.CharField(max_length=50, verbose_name='Ссылка на главной')
 
     class Meta:
         verbose_name = 'Главная страница'

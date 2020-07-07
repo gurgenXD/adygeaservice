@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'adygea-service.wlms.info',
-    '127.0.0.1',
+    'localhost',
 ]
 
 
