@@ -1,15 +1,16 @@
 from django.db import models
 from core.models import SEO
 from django.urls import reverse
+from uuid import uuid1
 
 
 class Document(models.Model):
-    title = models.CharField(max_length=250, unique=True, verbose_name='Название')
+    title = models.TextField(unique=True, verbose_name='Название')
     slug = models.SlugField(max_length=250, verbose_name='Slug', unique=True)
 
     def get_document_url(self, filename):
         ext = filename.split('.')[-1]
-        filename = '{0}.{1}'.format(str(self.slug)[:240], ext)
+        filename = '{0}.{1}'.format(uuid1(), ext)
         return 'documents/{0}'.format(filename)
 
     document = models.FileField(upload_to=get_document_url, max_length=254, verbose_name='Файл')
@@ -23,12 +24,12 @@ class Document(models.Model):
 
 
 class Execution(models.Model):
-    title = models.CharField(max_length=250, unique=True, verbose_name='Название')
+    title = models.TextField(unique=True, verbose_name='Название')
     slug = models.SlugField(max_length=250, verbose_name='Slug', unique=True)
 
     def get_document_url(self, filename):
         ext = filename.split('.')[-1]
-        filename = '{0}.{1}'.format(str(self.slug)[:240], ext)
+        filename = '{0}.{1}'.format(uuid1(), ext)
         return 'executions/{0}'.format(filename)
 
     document = models.FileField(upload_to=get_document_url, max_length=254, verbose_name='Файл')
